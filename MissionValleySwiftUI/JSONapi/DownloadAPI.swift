@@ -70,7 +70,7 @@ class DownloadWithCombine: ObservableObject {
 struct DownloadAPI: View {
     
     @StateObject var vm = DownloadWithCombine()
-    
+    //
     var body: some View {
         List {
             ForEach(vm.members) { member in

@@ -13,9 +13,24 @@ struct MemberModel : Identifiable, Codable {
         var id = UUID()
         let firstname: String
         let lastname: String
-    private enum CodingKeys: String, CodingKey {
-        case firstname, lastname
-    }
+        let three: Int
+        let four: Int
+        let five: Int
+        let six: Int
+        let index: Float
+        let threefour:  Int
+        let fourfive: Int
+        private enum CodingKeys: String, CodingKey {
+            case three = "3",
+                 four = "4",
+                 five = "5",
+                 six = "6",
+                 index = "HDCP_index",
+                 threefour = "3-4",
+                 fourfive = "4-5",
+                 firstname,
+                 lastname
+        }
     }
 
 
@@ -28,7 +43,7 @@ class DownloadWithCombine: ObservableObject {
         getMembers()
     }
     func getMembers() {
-        let URLString = "https://www.minnesotagolfcard.com/MV_handicaps_api.php"
+        let URLString = "https://www.thesouthbaygroup.com/MV_handicaps_api.php"
         guard let url = URL(string: URLString) else { return }
         URLSession.shared.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global(qos: .background))
@@ -60,10 +75,21 @@ struct DownloadAPI: View {
         List {
             ForEach(vm.members) { member in
                 if (member.firstname != "Name") {
-                    VStack {
-                        Text("\(member.firstname) \(member.lastname)")
-                        Text("HI THERE")
-                    }
+                    HStack(alignment: .top) {
+                            Text("\(member.firstname) \(member.lastname)")
+                                .frame(height: 8, alignment: .leading)
+                                .foregroundColor(Color.red)
+                            Spacer()
+                            Text("\(String(format: "%.1f",member.index))")
+                                .frame(height: 8, alignment: .leading)
+                            Text("\(member.three)")
+                                .frame(height: 8, alignment: .leading)
+    //                        Text("\(String(format: "%.1f",member.index)) \(member.three) \(member.four) \(member.five) \(member.six)")
+    //                            .frame(height: 10, alignment: .leading)
+                            
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
+                        //.background(Color.black)
                 }
             }
 
